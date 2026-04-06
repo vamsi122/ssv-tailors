@@ -1,134 +1,148 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SSV Atelier | 500+ Trending Back Neck Models | Vizag</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
-    <style>
-        :root { --gold: #af944d; --black: #1a1a1a; --soft-bg: #fdfdfd; }
-        body { font-family: 'Montserrat', sans-serif; background-color: var(--soft-bg); color: var(--black); scroll-behavior: smooth; }
-        .serif { font-family: 'Bodoni Moda', serif; }
-        .gold-text { color: var(--gold); }
-        .page { display: none; opacity: 0; transition: opacity 0.6s ease; }
-        .active { display: block; opacity: 1; }
-        
-        /* GALLERY ENGINE STYLING */
-        .model-card { background: white; border: 1px solid #f0f0f0; transition: 0.5s cubic-bezier(0.2, 1, 0.3, 1); position: relative; }
-        .model-card:hover { transform: translateY(-15px); border-color: var(--gold); box-shadow: 0 30px 60px rgba(0,0,0,0.05); }
-        .price-badge { position: absolute; top: 20px; right: 20px; background: var(--black); color: white; padding: 6px 15px; font-size: 10px; font-weight: 800; letter-spacing: 1px; z-index: 10; }
-        .img-zoom { overflow: hidden; height: 450px; background: #f9f9f9; }
-        .img-zoom img { width: 100%; height: 100%; object-fit: cover; transition: 0.8s ease; filter: grayscale(20%); }
-        .model-card:hover img { transform: scale(1.08); filter: grayscale(0%); }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SSV Atelier Pro</title>
 
-        /* NAV ANIMATION */
-        .nav-link { cursor: pointer; font-size: 10px; letter-spacing: 0.25em; font-weight: 600; text-transform: uppercase; transition: 0.3s; }
-        .nav-link:hover { color: var(--gold); }
-    </style>
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+body { background:#fafafa; font-family:sans-serif; }
+.card:hover { transform:scale(1.04); transition:0.3s; }
+</style>
 </head>
+
 <body>
 
-    <nav class="sticky top-0 bg-white/90 backdrop-blur-md z-[500] border-b border-gray-100 py-8 px-10">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
-            <div class="text-4xl font-bold serif tracking-tighter uppercase cursor-pointer" onclick="showPage('home')">
-                SSV <span class="gold-text italic text-3xl">Atelier</span>
-            </div>
-            <div class="flex flex-wrap justify-center gap-10">
-                <span onclick="showPage('home')" class="nav-link">Studio</span>
-                <span onclick="showPage('catalog')" class="nav-link">500+ Trends</span>
-                <span onclick="showPage('booking')" class="nav-link">Work Order</span>
-            </div>
-            <a href="https://wa.me/919966937346" class="bg-black text-white px-10 py-3 text-[10px] tracking-[0.3em] uppercase hover:bg-gold transition-all">WhatsApp Portal</a>
-        </div>
-    </nav>
+<!-- NAV -->
+<div class="flex justify-between p-4 bg-white shadow">
+<h1 class="font-bold text-xl">SSV Atelier</h1>
+<div>
+<button onclick="show('home')" class="mr-2">Home</button>
+<button onclick="show('admin')" class="mr-2">Admin</button>
+<button onclick="show('order')">Order</button>
+</div>
+</div>
 
-    <div id="home" class="page active text-center py-24">
-        <span class="gold-text tracking-[0.6em] text-[11px] uppercase mb-8 block font-bold">Vizag's Premier Ladies Boutique</span>
-        <h1 class="text-6xl md:text-9xl serif italic mb-12 leading-[0.85]">Elegance <br> Redefined.</h1>
-        <div class="inline-block border-y border-stone-200 py-4 mb-14">
-            <p class="text-[10px] tracking-[0.4em] uppercase text-stone-400 italic">Free Home Pickup & Delivery Service Provided</p>
-        </div>
-        <button onclick="showPage('catalog')" class="bg-black text-white px-16 py-6 text-[11px] tracking-[0.5em] uppercase hover:bg-gold shadow-2xl">Browse 500+ Models</button>
-    </div>
+<!-- HOME -->
+<div id="home" class="p-4">
+<h2 class="text-2xl mb-3">Design Gallery</h2>
 
-    <div id="catalog" class="page py-20 px-8 max-w-7xl mx-auto">
-        <div class="text-center mb-20">
-            <h2 class="text-5xl serif italic mb-4">Style Inventory</h2>
-            <p class="text-[10px] tracking-[0.4em] uppercase text-gray-400 font-bold">Comprehensive Analysis of Front & Back Neck Market Models</p>
-        </div>
-        <div id="style-engine" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12"></div>
-    </div>
+<input id="search" onkeyup="search()" placeholder="Search..." class="border p-2 w-full mb-3">
 
-    <div id="booking" class="page py-20 px-8 max-w-3xl mx-auto">
-        <h2 class="text-5xl serif text-center mb-10 italic">Work Order</h2>
-        <div class="bg-white p-12 md:p-20 shadow-2xl border border-gray-100">
-            <p class="text-[10px] uppercase font-bold tracking-[0.5em] text-center text-stone-300 mb-16 italic">Official Business Record System</p>
-            <form onsubmit="generateOrder(event)" class="space-y-10 text-left">
-                <div>
-                    <label class="text-[9px] font-bold uppercase tracking-widest text-stone-400">Full Name</label>
-                    <input type="text" id="c_name" class="w-full border-b-2 py-4 outline-none focus:border-gold" required>
-                </div>
-                <div>
-                    <label class="text-[9px] font-bold uppercase tracking-widest text-stone-400">Vizag Address for Pickup</label>
-                    <textarea id="c_addr" class="w-full border-b-2 py-4 outline-none focus:border-gold h-20" required></textarea>
-                </div>
-                <div>
-                    <label class="text-[9px] font-bold uppercase tracking-widest text-stone-400">Selected Neck Model</label>
-                    <input type="text" id="c_model" class="w-full border-b-2 py-4 outline-none gold-text font-bold" readonly value="Select from Gallery">
-                </div>
-                <button type="submit" class="w-full bg-black text-white py-6 text-[11px] font-bold tracking-[0.5em] uppercase hover:bg-gold shadow-xl">Submit to Boutique</button>
-            </form>
-        </div>
-    </div>
+<div id="grid" class="grid md:grid-cols-3 gap-4"></div>
+</div>
 
-    <footer class="py-24 border-t border-gray-100 mt-20 text-center text-gray-300 uppercase tracking-[0.5em] text-[9px]">
-        &copy; 2026 SSV Ladies Atelier &bull; Vizag, AP
-    </footer>
+<!-- ADMIN PANEL -->
+<div id="admin" class="hidden p-4 max-w-md mx-auto">
+<h2 class="text-xl mb-3">Add New Design</h2>
 
-    <script>
-        // STYLE ENGINE DATABASE
-        const neckStyles = [
-            { name: "Temple V-Neck", price: "₹950", back: "Deep V with Border", front: "Sweetheart", img: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=800" },
-            { name: "Royal Pot Neck", price: "₹850", back: "Classic Pot with Tassels", front: "Round Cut", img: "https://images.unsplash.com/photo-1621285853634-713b8dd6b590?w=800" },
-            { name: "Aari Peacock Master", price: "₹4,500+", back: "Maggam Peacock Motif", front: "Padded Sweetheart", img: "https://images.unsplash.com/photo-1583391733956-6c78276477e2?w=800" },
-            { name: "Net Patch Boat", price: "₹1,800+", back: "Net Keyhole Sheer", front: "Boat Neck", img: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=800" },
-            { name: "Traditional Square", price: "₹750", back: "Square Gold Piping", front: "Square Cut", img: "https://images.unsplash.com/photo-1558603668-6570496b66f8?w=800" }
-        ];
+<input id="dname" placeholder="Design Name" class="border p-2 w-full mb-2">
+<input id="dprice" placeholder="Price" class="border p-2 w-full mb-2">
+<input id="dimg" placeholder="Image URL" class="border p-2 w-full mb-2">
+<select id="dcat" class="border p-2 w-full mb-2">
+<option value="bridal">Bridal</option>
+<option value="simple">Simple</option>
+<option value="maggam">Maggam</option>
+</select>
 
-        function loadCatalog() {
-            const engine = document.getElementById('style-engine');
-            engine.innerHTML = '';
-            for(let i = 0; i < 100; i++) {
-                neckStyles.forEach(style => {
-                    const card = document.createElement('div');
-                    card.className = 'model-card p-6';
-                    card.innerHTML = `<div class="price-badge">${style.price}</div><div class="img-zoom"><img src="${style.img}"></div><div class="p-8 text-center"><p class="gold-text text-[9px] font-bold tracking-[0.3em] mb-4">ID: SSV-${1000 + i}</p><h3 class="serif text-3xl italic mb-6">${style.name}</h3><div class="text-[10px] text-gray-400 space-y-2 uppercase tracking-widest border-t pt-6"><p><strong>BACK:</strong> ${style.back}</p><p><strong>FRONT:</strong> ${style.front}</p></div><button onclick="selectStyle('${style.name} - ${style.price}')" class="mt-8 w-full py-4 border border-black text-[9px] font-bold uppercase hover:bg-black hover:text-white transition-all">Select Model</button></div>`;
-                    engine.appendChild(card);
-                });
-            }
-        }
+<button onclick="addDesign()" class="bg-black text-white p-2 w-full">Add Design</button>
+</div>
 
-        function showPage(id) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            if(id === 'catalog') loadCatalog();
-            window.scrollTo({top: 0, behavior: 'smooth'});
-        }
+<!-- ORDER -->
+<div id="order" class="hidden p-4 max-w-md mx-auto">
+<h2 class="text-xl mb-3">Place Order</h2>
 
-        function selectStyle(details) {
-            document.getElementById('c_model').value = details;
-            showPage('booking');
-        }
+<input id="name" placeholder="Name" class="border p-2 w-full mb-2">
+<input id="phone" placeholder="Phone" class="border p-2 w-full mb-2">
+<textarea id="addr" placeholder="Address" class="border p-2 w-full mb-2"></textarea>
+<input id="model" readonly class="border p-2 w-full mb-2">
 
-        function generateOrder(e) {
-            e.preventDefault();
-            const n = document.getElementById('c_name').value;
-            const a = document.getElementById('c_addr').value;
-            const m = document.getElementById('c_model').value;
-            const msg = `*SSV ATELIER ORDER*%0A*Name:* ${n}%0A*Address:* ${a}%0A*Style:* ${m}`;
-            window.open(`https://wa.me/919966937346?text=${msg}`, '_blank');
-        }
-    </script>
+<button onclick="send()" class="bg-black text-white p-2 w-full">WhatsApp</button>
+</div>
+
+<script>
+
+// STORAGE
+let designs = JSON.parse(localStorage.getItem("designs")) || [
+{ name:"Bridal Peacock", price:"₹5000", img:"https://images.unsplash.com/photo-1583391733956-6c78276477e2?w=800" },
+{ name:"Simple Neck", price:"₹900", img:"https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=800" }
+];
+
+// LOAD
+function load(){
+let grid=document.getElementById("grid");
+grid.innerHTML="";
+
+designs.forEach(d=>{
+grid.innerHTML+=`
+<div class="card bg-white p-3 border">
+<img src="${d.img}" class="h-48 w-full object-cover mb-2">
+<h3>${d.name}</h3>
+<p>${d.price}</p>
+<button onclick="select('${d.name}','${d.price}')" class="border w-full mt-2">Select</button>
+</div>`;
+});
+}
+
+// ADD DESIGN
+function addDesign(){
+let d={
+name:dname.value,
+price:dprice.value,
+img:dimg.value
+};
+
+designs.push(d);
+localStorage.setItem("designs",JSON.stringify(designs));
+
+alert("Added!");
+load();
+}
+
+// SEARCH
+function search(){
+let val=search.value.toLowerCase();
+let filtered=designs.filter(d=>d.name.toLowerCase().includes(val));
+
+let grid=document.getElementById("grid");
+grid.innerHTML="";
+
+filtered.forEach(d=>{
+grid.innerHTML+=`
+<div class="card bg-white p-3 border">
+<img src="${d.img}" class="h-48 w-full object-cover mb-2">
+<h3>${d.name}</h3>
+<p>${d.price}</p>
+<button onclick="select('${d.name}','${d.price}')" class="border w-full mt-2">Select</button>
+</div>`;
+});
+}
+
+// SELECT
+function select(n,p){
+model.value = n+" - "+p;
+show("order");
+}
+
+// NAV
+function show(id){
+["home","admin","order"].forEach(x=>{
+document.getElementById(x).style.display="none";
+});
+document.getElementById(id).style.display="block";
+}
+
+// SEND
+function send(){
+let msg=`Order:%0AName:${name.value}%0APhone:${phone.value}%0AAddress:${addr.value}%0AModel:${model.value}`;
+window.open("https://wa.me/919966937346?text="+msg);
+}
+
+load();
+
+</script>
+
 </body>
 </html>
